@@ -11,7 +11,7 @@ author: mage-os-team
 
 **Mage-OS Distribution 3.5.0** is now available. This is an **emergency security release** and every 3.x installation should upgrade immediately.
 
-It ports Adobe's `VULN-39341` hotfix for **StyleSmuggler** — [CVE-2026-75650](https://nvd.nist.gov/vuln/detail/CVE-2026-75650), CVSS 10.0, published as [security bulletin APSB26-146](https://helpx.adobe.com/security/products/magento/apsb26-146.html) — an **unauthenticated remote code execution** vulnerability affecting every Magento Open Source and Adobe Commerce version from 2.4.4 through 2.4.9. It also adds a layer of defense-in-depth hardening around the same attack surface, applies Adobe's September isolated patch `249-2026-09-001-CE`, and fixes four bugs.
+It ports Adobe's `VULN-39341` hotfix for **StyleSmuggler** — [CVE-2026-75650](https://nvd.nist.gov/vuln/detail/CVE-2026-75650), CVSS 10.0, published as [security bulletin APSB26-146](https://helpx.adobe.com/security/products/magento/apsb26-146.html) — an **unauthenticated remote code execution** vulnerability affecting every Magento Open Source and Adobe Commerce version from 2.4.4 through 2.4.9. It also adds a layer of defense-in-depth hardening around the same attack surface, applies Adobe's September isolated patch `249-2026-09-001-CE` ([security bulletin APSB26-138](https://helpx.adobe.com/security/products/magento/apsb26-138.html)), and fixes four bugs.
 
 It is built on the same **Magento Open Source 2.4.9** base as 3.4.0, with no dependency additions or removals and no change to PHP support, so it remains a drop-in upgrade from 3.4.x.
 
@@ -43,9 +43,11 @@ Because StyleSmuggler was exploited before it was patched, and because the under
 - **Directive output neutralization.** Resolved directive output is neutralized so a later filtering pass cannot re-parse it, closing the class of bug where a directive's *result* is treated as a new template.
 - **Template include-path validation.** A new `SecurePathValidator` anchors template include paths to the application root.
 
-#### September isolated patch
+#### September isolated patch — APSB26-138
 
-Adobe's `249-2026-09-001-CE` contributes seven further fixes, including an ACL bypass in the admin backup rollback controller, path traversal and arbitrary file deletion in the ImportExport export-file controller, an IDOR in InstantPurchase address loading, a quote-ownership check in PayPal Express checkout, an XSS in the admin order-create screen, and a double-encoding bypass in `Escaper::escapeXssInUrl()`.
+Adobe's September scheduled bulletin, [APSB26-138](https://helpx.adobe.com/security/products/magento/apsb26-138.html), shipped as the isolated patch `249-2026-09-001-CE`. It includes [CVE-2026-77111](https://nvd.nist.gov/vuln/detail/CVE-2026-77111), an incorrect-authorization issue leading to a security feature bypass, rated CVSS 8.7. **For the full issue list, CVE identifiers and severity ratings, see [APSB26-138](https://helpx.adobe.com/security/products/magento/apsb26-138.html).**
+
+It contributes seven further fixes, including an ACL bypass in the admin backup rollback controller, path traversal and arbitrary file deletion in the ImportExport export-file controller, an IDOR in InstantPurchase address loading, a quote-ownership check in PayPal Express checkout, an XSS in the admin order-create screen, and a double-encoding bypass in `Escaper::escapeXssInUrl()`.
 
 ### Patching is not the whole remediation
 

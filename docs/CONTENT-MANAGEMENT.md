@@ -468,24 +468,52 @@ export const footerData = {
 **Files to update:**
 
 1. **Create release blog post:**
-   - `astro/src/data/post/YYYY-MM-DD-release-mage-os-X-Y-Z.md`
+   - `src/data/post/YYYY-MM-DD-mage-os-X-Y-Z-release.md`
    - Use release post template above
+   - The releases page and the RSS feed pick it up automatically through the `Releases` category
 
-2. **Update system requirements (if changed):**
-   - `astro/src/pages/get-started/system-requirements.md`
+2. **Record the security advisory (if the release contains security fixes):**
+   - `src/data/security-advisories.json`
+   - Add an entry keyed by version; see [Security Advisories](#security-advisories) below
+   - This feeds the table and the "latest security release" block on `/product/security`
+
+3. **Update system requirements (if changed):**
+   - `src/pages/get-started/system-requirements.astro`
    - Update version tables
 
-3. **Update releases page:**
-   - `astro/src/pages/product/releases.md`
-   - Add to release history table
-
 4. **Update get-started pages (if installation changes):**
-   - `astro/src/pages/get-started/quick-start.md`
-   - `astro/src/pages/get-started/installation.md`
+   - `src/pages/get-started/quick-start.astro`
+   - `src/pages/get-started/installation.astro`
 
 5. **Update homepage stats (if applicable):**
-   - `astro/src/pages/index.astro`
+   - `src/pages/index.astro`
    - Update any version numbers displayed
+
+### Security Advisories
+
+Every release that carries security fixes gets an entry in `src/data/security-advisories.json`. The file is a
+content collection (`securityAdvisory` in `src/content/config.ts`), so the build fails on a bad entry: an unknown
+severity, a malformed date, a CVE that does not look like a CVE, or a `post` that does not match an existing post.
+
+```json
+"3.5.0": {
+  "date": "2026-09-08",
+  "severity": "critical",
+  "summary": "One or two sentences on what was fixed and who is affected.",
+  "cves": ["CVE-2026-75650"],
+  "bulletins": [
+    { "label": "APSB26-146", "url": "https://helpx.adobe.com/security/products/magento/apsb26-146.html" }
+  ],
+  "post": "2026-09-08-mage-os-3-5-0-release"
+}
+```
+
+- The key is the Mage-OS version.
+- `severity` is one of `critical`, `high`, `moderate`, `low`. Use Adobe's rating for ported patches, or the GitHub
+  Security Advisory rating for Mage-OS packages.
+- `cves` may be empty when Adobe publishes a bulletin without CVE identifiers at release time.
+- `bulletins` links to the Adobe bulletin, the GitHub Security Advisory, or the researcher write-up.
+- `post` is the release post's file name without extension. The post must not be a draft.
 
 ### System Requirements Update
 
@@ -681,9 +709,10 @@ When modifying content:
 | New event | `src/data/events/YYYY-MM-DD-slug.md` |
 | Update navigation | `src/navigation.ts` |
 | Update system requirements | `src/data/system-specs-config.yaml` (for min/recommended overrides) |
-| New release announcement | `src/data/post/` + `src/pages/product/releases.md` |
+| New release announcement | `src/data/post/` (releases page updates automatically) |
+| Security release advisory | `src/data/security-advisories.json` (shown on `/product/security`) |
 | Update leadership | `src/pages/about/leadership.astro` |
-| Update FAQ | `src/pages/faq.mdx` |
+| Update FAQ | `src/pages/faq.astro` |
 | Update homepage | `src/pages/index.astro` |
 
 ---

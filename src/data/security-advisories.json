@@ -1,0 +1,149 @@
+{
+  "3.5.0": {
+    "date": "2026-09-08",
+    "severity": "critical",
+    "summary": "Emergency release for StyleSmuggler, an unauthenticated remote code execution vulnerability exploited in the wild, plus Adobe's September isolated patch and Mage-OS specific template hardening.",
+    "cves": ["CVE-2026-75650", "CVE-2026-77111"],
+    "bulletins": [
+      {
+        "label": "APSB26-146",
+        "url": "https://helpx.adobe.com/security/products/magento/apsb26-146.html"
+      },
+      {
+        "label": "APSB26-138",
+        "url": "https://helpx.adobe.com/security/products/magento/apsb26-138.html"
+      }
+    ],
+    "post": "2026-09-08-mage-os-3-5-0-release"
+  },
+  "3.4.0": {
+    "date": "2026-08-11",
+    "severity": "critical",
+    "summary": "Ports Adobe's August isolated patch 249-2026-08-001-CE with access-control fixes in the admin media gallery, product review saving and customer account edit.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "APSB26-92",
+        "url": "https://helpx.adobe.com/security/products/magento/apsb26-92.html"
+      }
+    ],
+    "post": "2026-08-11-mage-os-3-4-0-release"
+  },
+  "3.3.0": {
+    "date": "2026-08-05",
+    "severity": "critical",
+    "summary": "Remote code execution through the bundled Page Builder template import module, exploitable by an administrator with template import access.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "GHSA-hrj3-88v2-6wjx",
+        "url": "https://github.com/mage-os/module-pagebuilder-template-import-export/security/advisories/GHSA-hrj3-88v2-6wjx"
+      }
+    ],
+    "post": "2026-08-05-mage-os-3-3-0-release"
+  },
+  "3.2.0": {
+    "date": "2026-07-14",
+    "severity": "high",
+    "summary": "Ports Adobe's July isolated patch 249-2026-07-001, covering guest cart takeover, stored XSS via inline translation, template injection and customer address media hardening.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "APSB26-73",
+        "url": "https://helpx.adobe.com/security/products/magento/apsb26-73.html"
+      }
+    ],
+    "post": "2026-07-14-mage-os-3-2-0-release"
+  },
+  "2.3.0": {
+    "date": "2026-05-13",
+    "severity": "high",
+    "summary": "Incorporates the Magento Open Source 2.4.8-p5 security patches, including GraphQL and file upload hardening. Last planned release on the 2.x branch.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "2.4.8-p5 patch notes",
+        "url": "https://experienceleague.adobe.com/en/docs/commerce-operations/release/notes/security-patches/2-4-8-patches#p5"
+      }
+    ],
+    "post": "2026-05-13-mage-os-2-3-0-release"
+  },
+  "2.2.1": {
+    "date": "2026-03-18",
+    "severity": "critical",
+    "summary": "Blocks the PolyShell upload vulnerability that allowed a remote code execution payload through REST API POST requests on insecure server environments.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "Sansec: PolyShell",
+        "url": "https://sansec.io/research/magento-polyshell"
+      }
+    ],
+    "post": "2026-03-18-mage-os-2-2-1-release"
+  },
+  "2.2.0": {
+    "date": "2026-03-10",
+    "severity": "high",
+    "summary": "Incorporates the Magento Open Source 2.4.8-p4 security patches.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "2.4.8-p4 patch notes",
+        "url": "https://experienceleague.adobe.com/en/docs/commerce-operations/release/notes/security-patches/2-4-8-patches#p4"
+      }
+    ],
+    "post": "2026-03-10-mage-os-2-2-0-release"
+  },
+  "1.3.1": {
+    "date": "2025-09-09",
+    "severity": "critical",
+    "summary": "Applies Adobe's emergency patch for CVE-2025-54236 on the same day Adobe published it.",
+    "cves": ["CVE-2025-54236"],
+    "bulletins": [
+      {
+        "label": "APSB25-88",
+        "url": "https://helpx.adobe.com/security/products/magento/apsb25-88.html"
+      }
+    ],
+    "post": "2025-09-09-mage-os-1-3-1-is-out"
+  },
+  "1.0.6": {
+    "date": "2025-02-13",
+    "severity": "high",
+    "summary": "Parity with Magento Open Source 2.4.7-p4 security patches.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "2.4.7-p4 patch notes",
+        "url": "https://experienceleague.adobe.com/en/docs/commerce-operations/release/notes/security-patches/2-4-7-patches"
+      }
+    ],
+    "post": "2025-02-13-release-mage-os-distribution-1-0-6"
+  },
+  "1.0.5": {
+    "date": "2024-11-06",
+    "severity": "high",
+    "summary": "Parity with Magento Open Source 2.4.7-p3 security patches.",
+    "cves": [],
+    "bulletins": [
+      {
+        "label": "2.4.7-p3 patch notes",
+        "url": "https://experienceleague.adobe.com/en/docs/commerce-operations/release/notes/security-patches/2-4-7-patches"
+      }
+    ],
+    "post": "2024-11-06-release-mage-os-distribution-1-0-5"
+  },
+  "1.0.4": {
+    "date": "2024-08-22",
+    "severity": "critical",
+    "summary": "Parity with Magento Open Source 2.4.7-p2 security patches. Rotate your encryption key after upgrading.",
+    "cves": ["CVE-2024-34102"],
+    "bulletins": [
+      {
+        "label": "2.4.7-p2 patch notes",
+        "url": "https://experienceleague.adobe.com/en/docs/commerce-operations/release/notes/security-patches/2-4-7-patches"
+      }
+    ],
+    "post": "2024-08-22-release-mage-os-distribution-1-0-4"
+  }
+}

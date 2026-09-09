@@ -9,6 +9,7 @@ export const headerData = {
         { text: 'Features', href: getPermalink('/product/features') },
         { text: 'Roadmap', href: getPermalink('/product/roadmap') },
         { text: 'Releases', href: getPermalink('/product/releases') },
+        { text: 'Security', href: getPermalink('/product/security') },
       ],
     },
     {
@@ -66,6 +67,7 @@ export const footerData = {
         { text: 'Features', href: getPermalink('/product/features') },
         { text: 'Roadmap', href: getPermalink('/product/roadmap') },
         { text: 'Releases', href: getPermalink('/product/releases') },
+        { text: 'Security', href: getPermalink('/product/security') },
       ],
     },
     {

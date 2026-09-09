@@ -7,12 +7,17 @@ interface Props extends Widget {
   title?: string;
   subtitle?: string;
   tagline?: string;
+  form?: string;
 }
+
+const MAILERLITE_ACCOUNT = '3427849:h9k6p2o2b7';
+const DEFAULT_FORM = '5399207:x2a8n4';
 
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
+  form = DEFAULT_FORM,
 
   id,
   isDark = false,
@@ -32,7 +37,7 @@ const {
       subtitle: 'text-xl text-muted dark:text-slate-400',
     }}
   />
-  <div class="ml-form-embed" data-account="3427849:h9k6p2o2b7" data-form="5399207:x2a8n4"></div>
+  <div class="ml-form-embed" data-account={MAILERLITE_ACCOUNT} data-form={form}></div>
   <Fragment
     set:html={`<script>
       (function(m,a,i,l,e,r){m['MailerLiteObject']=e;function f(){var c={a:arguments,q:[]};var r=this.push(c);return"number"!=typeof r?r:f.bind(c.q);}f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));_.parentNode.insertBefore(r,_);})(window,document,'script','https://static.mailerlite.com/js/universal.js','ml');

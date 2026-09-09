@@ -238,6 +238,10 @@ export const staticPagesMeta: Record<string, { title: string; description: strin
     title: 'Mage-OS Releases',
     description: 'Stay up to date with the latest Mage-OS releases and security updates.',
   },
+  security: {
+    title: 'Mage-OS Security',
+    description: 'Security releases, vulnerability reporting, patch policy and the security announcements list.',
+  },
   'get-started': {
     title: 'Get Started with Mage-OS',
     description: 'Everything you need to start using Mage-OS for your ecommerce project.',

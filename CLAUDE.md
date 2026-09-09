@@ -70,5 +70,6 @@ src/
 ├── pages/               # File-based routing
 ├── data/post/           # Blog posts (*.md)
 ├── data/events/         # Event definitions (*.md)
+├── data/security-advisories.json  # Security releases shown on /product/security (update with every security release)
 └── layouts/             # Page templates
 ```

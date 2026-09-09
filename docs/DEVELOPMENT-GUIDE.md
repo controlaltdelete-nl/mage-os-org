@@ -558,6 +558,7 @@ import ReleasePostsGrid from '~/components/widgets/ReleasePostsGrid.astro';
 - `title`: Section heading
 - `subtitle`: Supporting text
 - `tagline`: Small label above title
+- `form`: MailerLite form ID (`<form id>:<token>`), defaults to the general newsletter form. Pass a different ID to embed another form from the same account, such as the security announcements form.
 - Standard widget props (id, isDark, classes, bg)
 
 **Usage**:

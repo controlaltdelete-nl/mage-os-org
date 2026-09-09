@@ -1,0 +1,293 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/widgets/PageHero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Newsletter from '~/components/widgets/Newsletter.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Callout from '~/components/ui/Callout.astro';
+import { Icon } from 'astro-icon/components';
+import { getFormattedDate } from '~/utils/utils';
+import { getSecurityAdvisories, getCveUrl } from '~/utils/securityAdvisories';
+import type { AdvisorySeverity } from '~/utils/securityAdvisories';
+
+const advisories = await getSecurityAdvisories();
+const latestAdvisory = advisories[0] ?? null;
+
+const severityClasses: Record<AdvisorySeverity, string> = {
+  critical: 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300',
+  high: 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
+  moderate: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300',
+  low: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+};
+
+const metadata = {
+  title: 'Security',
+  description:
+    'How Mage-OS handles security: patch policy, vulnerability reporting, a history of security releases, and the security announcements mailing list.',
+  openGraph: {
+    images: [{ url: '/og/page/security.png', width: 1200, height: 630 }],
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <PageHero tagline="Product" variant="default">
+    <Fragment slot="title">Security</Fragment>
+    <Fragment slot="subtitle">
+      Mage-OS ships Adobe's security patches for the latest release branch within days of each bulletin, often within
+      hours, and publishes its own fixes with public advisories. This page is the single place for patch policy,
+      reporting, history and notifications.
+    </Fragment>
+  </PageHero>
+
+  <section class="px-4 py-8 sm:px-6 mx-auto lg:px-8 max-w-4xl">
+    {
+      latestAdvisory && (
+        <div class="p-6 bg-gradient-to-r from-orange-50 to-amber-50/50 dark:from-slate-800 dark:to-slate-800/80 rounded-lg border-l-4 border-primary mb-12">
+          <span class="text-xs uppercase font-bold text-primary tracking-wide">Latest Security Release</span>
+          <h2 class="text-2xl font-bold mt-2 font-heading">
+            Mage-OS {latestAdvisory.version}
+            <span
+              class={`ml-2 align-middle inline-block px-2 py-0.5 rounded text-xs font-semibold uppercase ${severityClasses[latestAdvisory.severity]}`}
+            >
+              {latestAdvisory.severity}
+            </span>
+          </h2>
+          <div class="text-sm text-muted dark:text-slate-400 mt-1">
+            <Icon name="tabler:clock" class="w-3.5 h-3.5 inline-block -mt-0.5" />
+            <time datetime={latestAdvisory.date.toISOString()}>Released {getFormattedDate(latestAdvisory.date)}</time>
+          </div>
+          <p class="mt-4 text-muted dark:text-slate-300">{latestAdvisory.summary}</p>
+          <a
+            href={latestAdvisory.postUrl}
+            class="inline-flex items-center mt-4 text-primary font-medium hover:underline"
+          >
+            Read the release notes
+            <Icon name="tabler:chevron-right" class="w-4 h-4 ml-1" />
+          </a>
+        </div>
+      )
+    }
+  </section>
+
+  <Features2
+    id="get-notified"
+    title="Get Notified"
+    tagline="Stay Informed"
+    subtitle="Security releases can be urgent. Pick at least one channel so you hear about them the moment they ship."
+    columns={3}
+    items={[
+      {
+        title: 'Security Announcements List',
+        description:
+          'A low-volume mailing list that only carries security releases: version, severity, affected versions and upgrade steps.',
+        icon: 'tabler:mail',
+        callToAction: { text: 'Subscribe', href: '#security-announcements' },
+      },
+      {
+        title: 'Releases RSS Feed',
+        description: 'Every release announcement, including security releases, in your feed reader.',
+        icon: 'tabler:rss',
+        callToAction: { text: 'Open feed', href: '/rss/category/releases.xml' },
+      },
+      {
+        title: 'GitHub Releases',
+        description:
+          'Watch the main repository for releases and security advisories to get notifications through GitHub.',
+        icon: 'tabler:brand-github',
+        callToAction: {
+          text: 'Watch repository',
+          href: 'https://github.com/mage-os/mageos-magento2/releases',
+          target: '_blank',
+        },
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-orange-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <Newsletter
+    id="security-announcements"
+    form="6136385:c5p9e4"
+    tagline="Security Announcements"
+    title="Subscribe to Security Announcements"
+    subtitle="One email per security release, with the version, the severity and what to do. Nothing else."
+  />
+
+  <section class="px-4 py-8 sm:px-6 mx-auto lg:px-8 max-w-4xl">
+    <div class="prose dark:prose-invert prose-headings:font-heading prose-headings:font-bold max-w-none">
+      <h2 id="report">Report a Vulnerability</h2>
+      <p>
+        If you believe you have found a security issue in the Mage-OS Distribution, a Mage-OS package, or this website,
+        email <a href="mailto:security@mage-os.org">security@mage-os.org</a>.
+      </p>
+      <Callout type="warning" title="Do not open a public issue">
+        Public GitHub issues, pull requests and Discord messages are visible to everyone, including attackers. Keep
+        vulnerability details in email until a fix is available.
+      </Callout>
+      <h3>What to include</h3>
+      <ul>
+        <li>The affected package and version, and the Magento Open Source version it is based on.</li>
+        <li>Steps to reproduce, or a proof of concept if you have one.</li>
+        <li>The impact as you understand it, and whether you have seen it exploited.</li>
+        <li>How you would like to be credited, or that you prefer to stay anonymous.</li>
+      </ul>
+      <h3>What happens next</h3>
+      <ol>
+        <li>You get an acknowledgement from the security team.</li>
+        <li>We confirm the issue, assess severity, and work on a fix in a private repository.</li>
+        <li>
+          The fix ships in a security release. Critical issues are released as soon as the fix is validated, not on a
+          schedule.
+        </li>
+        <li>A public advisory follows the release, with credit to the reporter unless they asked otherwise.</li>
+      </ol>
+      <p>
+        Issues in Magento Open Source itself are also relevant to Mage-OS. Report those to
+        <a href="https://helpx.adobe.com/security/alertus.html" target="_blank" rel="noopener noreferrer">Adobe</a>
+        as well, since Adobe owns the upstream fix.
+      </p>
+
+      <hr />
+
+      <h2 id="policy">Support and Patch Policy</h2>
+      <p>
+        Mage-OS provides security patches for the <strong>latest release branch only</strong>. Older releases receive no
+        fixes. The upgrade path within a branch is a normal Composer update, so staying current is designed to be cheap.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>How it reaches Mage-OS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Adobe scheduled bulletins (second Tuesday of the month)</td>
+            <td
+              >Ported to the Mage-OS source tree and released as a new minor version within days, often within hours.</td
+            >
+          </tr>
+          <tr>
+            <td>Adobe isolated patches and hotfixes</td>
+            <td>Ported to source so you receive them through a Composer upgrade instead of applying patch files.</td>
+          </tr>
+          <tr>
+            <td>Vulnerabilities in Mage-OS packages</td>
+            <td>Fixed in a security release with a GitHub Security Advisory on the affected repository.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Mage-OS is a community-run organization. There are no SLAs on the distribution itself. Several
+        <a href="/community/partners">partners</a> offer commercial support with response guarantees.
+      </p>
+
+      <hr />
+
+      <h2 id="advisories">Security Releases</h2>
+      <p>Every Mage-OS release that carried security fixes, newest first. Version numbers link to the release notes.</p>
+    </div>
+
+    <div class="overflow-x-auto mt-6">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="border-b-2 border-gray-200 dark:border-gray-700 text-left">
+            <th class="py-2 pr-4 font-semibold">Version</th>
+            <th class="py-2 pr-4 font-semibold whitespace-nowrap">Date</th>
+            <th class="py-2 pr-4 font-semibold">Severity</th>
+            <th class="py-2 pr-4 font-semibold">Summary</th>
+            <th class="py-2 font-semibold">References</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            advisories.map((advisory) => (
+              <tr class="border-b border-gray-200 dark:border-gray-700 align-top">
+                <td class="py-3 pr-4 font-medium whitespace-nowrap">
+                  <a href={advisory.postUrl} class="text-primary hover:underline">
+                    {advisory.version}
+                  </a>
+                </td>
+                <td class="py-3 pr-4 whitespace-nowrap text-muted dark:text-slate-400">
+                  <time datetime={advisory.date.toISOString()}>{getFormattedDate(advisory.date)}</time>
+                </td>
+                <td class="py-3 pr-4">
+                  <span
+                    class={`inline-block px-2 py-0.5 rounded text-xs font-semibold uppercase ${severityClasses[advisory.severity]}`}
+                  >
+                    {advisory.severity}
+                  </span>
+                </td>
+                <td class="py-3 pr-4 min-w-[16rem]">{advisory.summary}</td>
+                <td class="py-3">
+                  <ul class="list-none m-0 p-0 space-y-1">
+                    {advisory.bulletins.map((bulletin) => (
+                      <li>
+                        <a
+                          href={bulletin.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary hover:underline whitespace-nowrap"
+                        >
+                          {bulletin.label}
+                        </a>
+                      </li>
+                    ))}
+                    {advisory.cves.map((cve) => (
+                      <li>
+                        <a
+                          href={getCveUrl(cve)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary hover:underline whitespace-nowrap"
+                        >
+                          {cve}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <FAQs
+    title="Security FAQ"
+    tagline="Questions"
+    columns={1}
+    items={[
+      {
+        title: 'Can a community project be trusted with security?',
+        description:
+          'Judge it by the record in the table above: Adobe patches ported within days of each bulletin and often within hours, emergency fixes released the same day Adobe published them, and vulnerabilities in Mage-OS packages disclosed with a GitHub Security Advisory.',
+      },
+      {
+        title: 'Which versions get security fixes?',
+        description:
+          'Only the latest release branch. When a new branch ships, the previous one stops receiving fixes. Upgrades within a branch are a normal Composer update, and the <a href="/get-started/migration-guide" class="underline">migration guide</a> covers branch upgrades.',
+      },
+      {
+        title: 'Does Mage-OS help with PCI DSS compliance?',
+        description:
+          'Mage-OS inherits the compliance-relevant features of Magento Open Source and applies the same patches. Compliance itself depends on your hosting, payment integration and processes. The <a href="/faq" class="underline">FAQ</a> has more on compliance features.',
+      },
+      {
+        title: 'Where do I get support with an SLA?',
+        description:
+          'The Association does not sell support. <a href="/community/partners" class="underline">Mage-OS partners</a> offer hosting, maintenance and incident response with contractual response times.',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-orange-50 dark:bg-transparent"></div>
+    </Fragment>
+  </FAQs>
+</Layout>
